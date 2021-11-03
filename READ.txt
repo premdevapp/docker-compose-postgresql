@@ -1,0 +1,6 @@
+docker ps -f "name=postgres"
+docker exec -it c737b7b5ace6 /bin/bash
+psql -U postgres
+\d
+select to_char(s.date_sale, 'yyyy-mm-dd'), sn.status_name, p.name, count(*), sum(s.amount) from sale s left join order_status os using(sale_id)
+left join product p using(product_id) left join status_name sn using(status_nam_id) where s.date_sale > '2020-01-01' group by 1,2,3 order by 1,2, limit 5;
